@@ -6,7 +6,7 @@ A VS Code extension for switching the git profile (`user.name` + `user.email`) p
 
 ## Features
 
-- **Per-workspace activation**: run `Git Profile Switcher: Activation` and pick `true`.
+- **Global activation**: run `Git Profile Switcher: Activation` once and pick `true`. It applies to every project opened in VS Code with this extension installed.
 - **Automatic detection**: when activated, the extension reads the git identity your terminal uses in this project (`git config user.name` / `user.email`). If it is not in your profile list yet, it is saved as a profile with the alias **`init`** (or `init-<project-name>` if `init` is already used by another identity).
 - **Add profile**: enter an alias, username and email.
 - **Edit profile**: change the alias, username, email or color. If the profile is in use in this project, the project's git config is updated too.
@@ -20,7 +20,7 @@ A VS Code extension for switching the git profile (`user.name` + `user.email`) p
 
 | Command | Description |
 | --- | --- |
-| `Git Profile Switcher: Activation` | Enable/disable the extension for this workspace |
+| `Git Profile Switcher: Activation` | Enable/disable the extension for all projects |
 | `Git Profile Switcher: Switch profile` | Pick the git profile for this project |
 | `Git Profile Switcher: Add profile` | Add a new profile |
 | `Git Profile Switcher: Edit profile` | Edit an existing profile |
@@ -33,8 +33,10 @@ A VS Code extension for switching the git profile (`user.name` + `user.email`) p
 | Data | Location |
 | --- | --- |
 | Profile list | User settings `gitProfileSwitcher.profiles`, shared across all projects and editable by hand in `settings.json` |
-| Activation status | Workspace settings `gitProfileSwitcher.enabled` (`.vscode/settings.json`) |
+| Activation status | User settings `gitProfileSwitcher.enabled`, applies to all projects |
 | Project identity | The project's `.git/config` (`git config --local`) |
+
+Profiles and the activation status are stored in user settings, so after setting them once they are available in every project, as long as this extension is installed. With Settings Sync turned on, they follow you to other machines too. To turn the extension off for just one project, add `"gitProfileSwitcher.enabled": false` to that project's `.vscode/settings.json`.
 
 Your global `~/.gitconfig` is never modified.
 
@@ -54,6 +56,9 @@ npm install
 npm test              # compile + unit tests
 npm run package       # build the .vsix
 npm run install:local # build + install into your local VS Code
+npm run deploy        # publish to Open VSX
 ```
 
 Press `F5` in VS Code to launch the Extension Development Host.
+
+To publish to Open VSX: `npm run deploy`. See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for setup and publishing details.

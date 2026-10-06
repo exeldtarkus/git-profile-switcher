@@ -3,4 +3,7 @@ src/**
 out/test/**
 **/*.map
 tsconfig.json
+docs/DEVELOPMENT.md
+docs/DEVELOPMENT.id.md
 scripts/**
+deployment/**

@@ -8,7 +8,7 @@
   "command.deleteProfile": "Delete profile",
   "command.setColor": "Set profile color",
   "command.language": "Language",
-  "config.enabled": "Enable Git Profile Switcher for this workspace.",
+  "config.enabled": "Enable Git Profile Switcher in all projects (user setting). A project can still override it in its workspace settings.",
   "config.profiles": "Saved git profiles (alias, name, email). Shared across all projects.",
   "config.profiles.color": "Status bar text color when this profile is active, hex like #ff8800. Optional.",
   "config.language": "Language for notifications.",

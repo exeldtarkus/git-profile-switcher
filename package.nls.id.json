@@ -8,7 +8,7 @@
   "command.deleteProfile": "Hapus profile",
   "command.setColor": "Atur warna profile",
   "command.language": "Bahasa",
-  "config.enabled": "Aktifkan Git Profile Switcher untuk workspace ini.",
+  "config.enabled": "Aktifkan Git Profile Switcher di semua project (user setting). Project tertentu tetap bisa menimpanya lewat workspace settings.",
   "config.profiles": "Daftar profile git tersimpan (alias, name, email). Dipakai di semua project.",
   "config.profiles.color": "Warna teks status bar saat profile ini aktif, hex seperti #ff8800. Opsional.",
   "config.language": "Bahasa untuk notifikasi.",

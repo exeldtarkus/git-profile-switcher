@@ -6,7 +6,7 @@ Extension VS Code untuk mengganti git profile (`user.name` + `user.email`) per p
 
 ## Fitur
 
-- **Aktivasi per workspace**: jalankan `Git Profile Switcher: Aktivasi` lalu pilih `true`.
+- **Aktivasi global**: jalankan `Git Profile Switcher: Aktivasi` sekali lalu pilih `true`. Berlaku di semua project yang dibuka di VS Code dengan extension ini terpasang.
 - **Deteksi otomatis**: saat aktif, extension membaca identity git yang dipakai terminal di project ini (`git config user.name` / `user.email`). Jika belum ada di daftar profile, identity itu disimpan sebagai profile dengan alias **`init`** (atau `init-<nama-project>` jika `init` sudah dipakai identity lain).
 - **Tambah profile**: isi alias, username, dan email.
 - **Edit profile**: ubah alias, username, email, atau warna. Jika profile itu sedang dipakai di project ini, git config project ikut diperbarui.
@@ -20,7 +20,7 @@ Extension VS Code untuk mengganti git profile (`user.name` + `user.email`) per p
 
 | Command | Keterangan |
 | --- | --- |
-| `Git Profile Switcher: Aktivasi` | Aktifkan/nonaktifkan extension untuk workspace ini |
+| `Git Profile Switcher: Aktivasi` | Aktifkan/nonaktifkan extension untuk semua project |
 | `Git Profile Switcher: Ganti profile` | Pilih profile git untuk project ini |
 | `Git Profile Switcher: Tambah profile` | Tambah profile baru |
 | `Git Profile Switcher: Edit profile` | Edit profile yang sudah ada |
@@ -35,8 +35,10 @@ Nama command mengikuti bahasa tampilan VS Code (English atau Bahasa Indonesia).
 | Data | Lokasi |
 | --- | --- |
 | Daftar profile | User settings `gitProfileSwitcher.profiles`, dipakai di semua project dan bisa diedit manual di `settings.json` |
-| Status aktif | Workspace settings `gitProfileSwitcher.enabled` (`.vscode/settings.json`) |
+| Status aktif | User settings `gitProfileSwitcher.enabled`, berlaku di semua project |
 | Identity project | `.git/config` project (`git config --local`) |
+
+Daftar profile dan status aktif disimpan di user settings, jadi cukup di-set sekali dan langsung tersedia di semua project, selama extension ini terpasang. Jika Settings Sync aktif, keduanya juga ikut ke komputer lain. Untuk menonaktifkan extension di satu project saja, tambahkan `"gitProfileSwitcher.enabled": false` di `.vscode/settings.json` project tersebut.
 
 `~/.gitconfig` global Anda tidak pernah diubah.
 
@@ -56,6 +58,9 @@ npm install
 npm test              # compile + unit test
 npm run package       # build .vsix
 npm run install:local # build + install ke VS Code lokal
+npm run deploy        # publish ke Open VSX
 ```
 
 Tekan `F5` di VS Code untuk menjalankan Extension Development Host.
+
+Untuk publish ke Open VSX: `npm run deploy`. Lihat [DEVELOPMENT.id.md](DEVELOPMENT.id.md) untuk detail setup dan publish.

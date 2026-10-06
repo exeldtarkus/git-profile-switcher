@@ -51,7 +51,19 @@ export function activate(context: vscode.ExtensionContext): void {
       if (!picked || picked.value === current) {
         return;
       }
-      await config().update('enabled', picked.value, vscode.ConfigurationTarget.Workspace);
+      // Disimpan di user settings supaya berlaku di semua project yang membuka VS Code dengan extension ini.
+      await config().update('enabled', picked.value, vscode.ConfigurationTarget.Global);
+      // Nilai lama di workspace (versi sebelumnya) akan menimpa user settings, jadi dibersihkan.
+      const inspected = config().inspect<boolean>('enabled');
+      if (inspected?.workspaceValue !== undefined) {
+        await config().update('enabled', undefined, vscode.ConfigurationTarget.Workspace);
+      }
+      if (inspected?.workspaceFolderValue !== undefined) {
+        const folder = vscode.workspace.workspaceFolders?.[0];
+        await vscode.workspace
+          .getConfiguration('gitProfileSwitcher', folder)
+          .update('enabled', undefined, vscode.ConfigurationTarget.WorkspaceFolder);
+      }
       vscode.window.showInformationMessage(picked.value ? t().enabled() : t().disabled());
     }),
     vscode.commands.registerCommand('gitProfileSwitcher.language', async () => {
