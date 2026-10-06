@@ -1,0 +1,150 @@
+{
+  "name": "git-profile-switcher",
+  "displayName": "%displayName%",
+  "description": "%description%",
+  "version": "0.2.1",
+  "publisher": "exeltarkus",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "gitProfileSwitcher.activation",
+        "title": "%command.activation%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.switchProfile",
+        "title": "%command.switchProfile%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.addProfile",
+        "title": "%command.addProfile%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.editProfile",
+        "title": "%command.editProfile%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.setColor",
+        "title": "%command.setColor%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.deleteProfile",
+        "title": "%command.deleteProfile%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.language",
+        "title": "%command.language%",
+        "category": "Git Profile Switcher"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "gitProfileSwitcher.switchProfile",
+          "when": "config.gitProfileSwitcher.enabled"
+        },
+        {
+          "command": "gitProfileSwitcher.addProfile",
+          "when": "config.gitProfileSwitcher.enabled"
+        },
+        {
+          "command": "gitProfileSwitcher.editProfile",
+          "when": "config.gitProfileSwitcher.enabled"
+        },
+        {
+          "command": "gitProfileSwitcher.deleteProfile",
+          "when": "config.gitProfileSwitcher.enabled"
+        },
+        {
+          "command": "gitProfileSwitcher.setColor",
+          "when": "config.gitProfileSwitcher.enabled"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Git Profile Switcher",
+      "properties": {
+        "gitProfileSwitcher.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "%config.enabled%"
+        },
+        "gitProfileSwitcher.profiles": {
+          "type": "array",
+          "default": [],
+          "scope": "application",
+          "description": "%config.profiles%",
+          "items": {
+            "type": "object",
+            "required": [
+              "alias",
+              "name",
+              "email"
+            ],
+            "properties": {
+              "alias": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "color": {
+                "type": "string",
+                "pattern": "^(#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}))?$",
+                "description": "%config.profiles.color%"
+              }
+            }
+          }
+        },
+        "gitProfileSwitcher.language": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "en",
+            "id"
+          ],
+          "default": "auto",
+          "enumDescriptions": [
+            "%config.language.auto%",
+            "%config.language.en%",
+            "%config.language.id%"
+          ],
+          "description": "%config.language%"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "npm run compile && node --test out/test/*.test.js",
+    "package": "vsce package --skip-license --allow-missing-repository",
+    "install:local": "node scripts/install-local.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^4.0.0",
+    "typescript": "^5.4.0"
+  }
+}
