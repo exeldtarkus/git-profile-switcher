@@ -113,6 +113,15 @@ export function registerInitProfile(
 }
 
 /**
+ * Reset: buang semua profile, lalu mulai lagi dari identity git yang aktif di terminal
+ * sebagai satu-satunya profile dengan alias 'init'.
+ */
+export function resetProfiles(identity: Identity, project: string): { profiles: Profile[]; active: Profile | undefined } {
+  const { profiles, active } = registerInitProfile([], identity, project);
+  return { profiles, active };
+}
+
+/**
  * Validasi input profile. `originalAlias` diisi saat edit supaya alias milik profile itu sendiri
  * tidak dianggap duplikat. Return pesan error (key) atau undefined jika valid.
  */

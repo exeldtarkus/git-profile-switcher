@@ -14,8 +14,22 @@ import {
   registerInitProfile,
   removeProfile,
   replaceProfile,
+  resetProfiles,
   validateProfile,
 } from './profiles';
+
+const LOCALIZED_COMMANDS = [
+  'activation',
+  'switchProfile',
+  'addProfile',
+  'editProfile',
+  'setColor',
+  'setIcon',
+  'deleteProfile',
+  'openSettings',
+  'reset',
+  'language',
+];
 
 let statusBar: vscode.StatusBarItem;
 let configWatcher: vscode.FileSystemWatcher | undefined;
@@ -28,6 +42,9 @@ export function activate(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration((e) => {
+      if (e.affectsConfiguration('gitProfileSwitcher.language')) {
+        updateLangContext();
+      }
       if (e.affectsConfiguration('gitProfileSwitcher.enabled')) {
         onEnabledChanged();
       } else if (e.affectsConfiguration('gitProfileSwitcher')) {
@@ -45,7 +62,7 @@ export function activate(context: vscode.ExtensionContext): void {
       const current = config().get<boolean>('enabled', false);
       const picked = await vscode.window.showQuickPick(
         [true, false].map((value) => ({
-          label: String(value),
+          label: value ? t().enable() : t().disable(),
           description: value === current ? t().current() : undefined,
           value,
         })),
@@ -91,7 +108,20 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('gitProfileSwitcher.deleteProfile', () => guard(deleteProfile)),
     vscode.commands.registerCommand('gitProfileSwitcher.setColor', () => guard(setColor)),
     vscode.commands.registerCommand('gitProfileSwitcher.setIcon', () => guard(setIcon)),
+    vscode.commands.registerCommand('gitProfileSwitcher.openSettings', openSettings),
+    vscode.commands.registerCommand('gitProfileSwitcher.reset', () => guard(resetAll)),
   );
+
+  // Judul command di package.json statis, jadi setiap command punya kembaran berjudul Bahasa Indonesia
+  // (gitProfileSwitcher.id.*). Command Palette menampilkan salah satunya sesuai context key gitProfileSwitcher.lang.
+  for (const name of LOCALIZED_COMMANDS) {
+    context.subscriptions.push(
+      vscode.commands.registerCommand(`gitProfileSwitcher.id.${name}`, () =>
+        vscode.commands.executeCommand(`gitProfileSwitcher.${name}`),
+      ),
+    );
+  }
+  updateLangContext();
 
   if (enabled()) {
     detectInitProfile().finally(refresh);
@@ -134,24 +164,29 @@ async function detectInitProfile(): Promise<void> {
 async function switchProfile(root: string): Promise<void> {
   const list = profiles();
   const active = findByIdentity(list, await getIdentity(root));
-  type Item = vscode.QuickPickItem & { profile?: Profile };
+  type Item = vscode.QuickPickItem & { profile?: Profile; action?: () => Promise<void> };
   const items: Item[] = list.map((p) => ({
     label: `$(${p.icon ?? DEFAULT_ICON}) ${p.alias}`,
     description: [p.name, p.color, p === active ? t().current() : undefined].filter(Boolean).join(' · '),
     detail: p.email,
     profile: p,
   }));
-  items.push({ label: t().addNew() });
+  items.push(
+    { label: '', kind: vscode.QuickPickItemKind.Separator },
+    { label: t().addNew(), action: () => addProfile(root) },
+    { label: t().openSettings(), action: openSettings },
+    { label: t().reset(), action: () => resetAll(root) },
+  );
 
   const picked = await vscode.window.showQuickPick(items, { placeHolder: t().switchPlaceholder() });
   if (!picked) {
     return;
   }
-  if (!picked.profile) {
-    await addProfile(root);
+  if (picked.action) {
+    await picked.action();
     return;
   }
-  if (picked.profile !== active) {
+  if (picked.profile && picked.profile !== active) {
     await applyProfile(root, picked.profile);
   }
 }
@@ -291,6 +326,37 @@ async function pickColor(current?: string): Promise<string | undefined> {
     value: current ?? '#',
     validateInput: (v) => (isValidColor(v) ? undefined : t().colorInvalid()),
   });
+}
+
+/** Buka settings.json user dan arahkan ke daftar profile. */
+async function openSettings(): Promise<void> {
+  try {
+    await vscode.commands.executeCommand('workbench.action.openSettingsJson', {
+      revealSetting: { key: 'gitProfileSwitcher.profiles' },
+    });
+  } catch {
+    await vscode.commands.executeCommand('workbench.action.openSettingsJson'); // VS Code lama: tanpa revealSetting
+  }
+}
+
+/** Hapus semua profile lalu buat ulang profile 'init' dari identity git yang aktif di terminal. */
+async function resetAll(root: string): Promise<void> {
+  const identity = await getIdentity(root);
+  const hasIdentity = Boolean(identity.name && identity.email);
+  const message = hasIdentity ? t().confirmReset(identity.name!, identity.email!) : t().confirmResetNoIdentity();
+  const answer = await vscode.window.showWarningMessage(message, { modal: true }, t().yes());
+  if (answer !== t().yes()) {
+    return;
+  }
+  const result = resetProfiles(identity, path.basename(root));
+  await saveProfiles(result.profiles);
+  if (result.active) {
+    const { alias, name, email } = result.active;
+    vscode.window.showInformationMessage(t().resetDone(alias, name, email));
+  } else {
+    vscode.window.showInformationMessage(t().resetDoneEmpty());
+  }
+  await refresh();
 }
 
 async function applyProfile(root: string, profile: Profile): Promise<void> {
@@ -463,6 +529,10 @@ function enabled(): boolean {
 
 function config() {
   return vscode.workspace.getConfiguration('gitProfileSwitcher');
+}
+
+function updateLangContext(): void {
+  vscode.commands.executeCommand('setContext', 'gitProfileSwitcher.lang', currentLang());
 }
 
 function currentLang(): Lang {

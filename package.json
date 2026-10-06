@@ -2,7 +2,7 @@
   "name": "git-profile-switcher",
   "displayName": "%displayName%",
   "description": "%description%",
-  "version": "0.4.1",
+  "version": "0.6.0",
   "publisher": "exeltarkus",
   "license": "MIT",
   "repository": {
@@ -57,36 +57,152 @@
         "category": "Git Profile Switcher"
       },
       {
+        "command": "gitProfileSwitcher.openSettings",
+        "title": "%command.openSettings%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.reset",
+        "title": "%command.reset%",
+        "category": "Git Profile Switcher"
+      },
+      {
         "command": "gitProfileSwitcher.language",
         "title": "%command.language%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.id.activation",
+        "title": "%command.id.activation%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.id.switchProfile",
+        "title": "%command.id.switchProfile%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.id.addProfile",
+        "title": "%command.id.addProfile%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.id.editProfile",
+        "title": "%command.id.editProfile%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.id.setColor",
+        "title": "%command.id.setColor%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.id.setIcon",
+        "title": "%command.id.setIcon%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.id.deleteProfile",
+        "title": "%command.id.deleteProfile%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.id.openSettings",
+        "title": "%command.id.openSettings%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.id.reset",
+        "title": "%command.id.reset%",
+        "category": "Git Profile Switcher"
+      },
+      {
+        "command": "gitProfileSwitcher.id.language",
+        "title": "%command.id.language%",
         "category": "Git Profile Switcher"
       }
     ],
     "menus": {
       "commandPalette": [
         {
+          "command": "gitProfileSwitcher.activation",
+          "when": "gitProfileSwitcher.lang != 'id'"
+        },
+        {
+          "command": "gitProfileSwitcher.id.activation",
+          "when": "gitProfileSwitcher.lang == 'id'"
+        },
+        {
           "command": "gitProfileSwitcher.switchProfile",
-          "when": "config.gitProfileSwitcher.enabled"
+          "when": "config.gitProfileSwitcher.enabled && gitProfileSwitcher.lang != 'id'"
+        },
+        {
+          "command": "gitProfileSwitcher.id.switchProfile",
+          "when": "config.gitProfileSwitcher.enabled && gitProfileSwitcher.lang == 'id'"
         },
         {
           "command": "gitProfileSwitcher.addProfile",
-          "when": "config.gitProfileSwitcher.enabled"
+          "when": "config.gitProfileSwitcher.enabled && gitProfileSwitcher.lang != 'id'"
+        },
+        {
+          "command": "gitProfileSwitcher.id.addProfile",
+          "when": "config.gitProfileSwitcher.enabled && gitProfileSwitcher.lang == 'id'"
         },
         {
           "command": "gitProfileSwitcher.editProfile",
-          "when": "config.gitProfileSwitcher.enabled"
+          "when": "config.gitProfileSwitcher.enabled && gitProfileSwitcher.lang != 'id'"
         },
         {
-          "command": "gitProfileSwitcher.deleteProfile",
-          "when": "config.gitProfileSwitcher.enabled"
+          "command": "gitProfileSwitcher.id.editProfile",
+          "when": "config.gitProfileSwitcher.enabled && gitProfileSwitcher.lang == 'id'"
         },
         {
           "command": "gitProfileSwitcher.setColor",
-          "when": "config.gitProfileSwitcher.enabled"
+          "when": "config.gitProfileSwitcher.enabled && gitProfileSwitcher.lang != 'id'"
+        },
+        {
+          "command": "gitProfileSwitcher.id.setColor",
+          "when": "config.gitProfileSwitcher.enabled && gitProfileSwitcher.lang == 'id'"
         },
         {
           "command": "gitProfileSwitcher.setIcon",
-          "when": "config.gitProfileSwitcher.enabled"
+          "when": "config.gitProfileSwitcher.enabled && gitProfileSwitcher.lang != 'id'"
+        },
+        {
+          "command": "gitProfileSwitcher.id.setIcon",
+          "when": "config.gitProfileSwitcher.enabled && gitProfileSwitcher.lang == 'id'"
+        },
+        {
+          "command": "gitProfileSwitcher.deleteProfile",
+          "when": "config.gitProfileSwitcher.enabled && gitProfileSwitcher.lang != 'id'"
+        },
+        {
+          "command": "gitProfileSwitcher.id.deleteProfile",
+          "when": "config.gitProfileSwitcher.enabled && gitProfileSwitcher.lang == 'id'"
+        },
+        {
+          "command": "gitProfileSwitcher.openSettings",
+          "when": "gitProfileSwitcher.lang != 'id'"
+        },
+        {
+          "command": "gitProfileSwitcher.id.openSettings",
+          "when": "gitProfileSwitcher.lang == 'id'"
+        },
+        {
+          "command": "gitProfileSwitcher.reset",
+          "when": "config.gitProfileSwitcher.enabled && gitProfileSwitcher.lang != 'id'"
+        },
+        {
+          "command": "gitProfileSwitcher.id.reset",
+          "when": "config.gitProfileSwitcher.enabled && gitProfileSwitcher.lang == 'id'"
+        },
+        {
+          "command": "gitProfileSwitcher.language",
+          "when": "gitProfileSwitcher.lang != 'id'"
+        },
+        {
+          "command": "gitProfileSwitcher.id.language",
+          "when": "gitProfileSwitcher.lang == 'id'"
         }
       ]
     },
@@ -140,7 +256,7 @@
             "en",
             "id"
           ],
-          "default": "auto",
+          "default": "en",
           "enumDescriptions": [
             "%config.language.auto%",
             "%config.language.en%",

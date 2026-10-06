@@ -2,6 +2,8 @@ export type Lang = 'en' | 'id';
 
 const en = {
   current: () => 'current',
+  enable: () => '$(check) Enable',
+  disable: () => '$(circle-slash) Disable',
   activationPlaceholder: () => 'Enable Git Profile Switcher in all projects?',
   enabled: () => 'Git Profile Switcher enabled for all projects.',
   disabled: () => 'Git Profile Switcher disabled for all projects.',
@@ -13,6 +15,14 @@ const en = {
   initSaved: (alias: string, name: string, email: string) => `Current git identity saved as profile '${alias}' (${name} <${email}>).`,
   switchPlaceholder: () => 'Choose the git profile for this project',
   addNew: () => '$(add) Add new profile…',
+  openSettings: () => '$(json) Open settings JSON',
+  reset: () => '$(discard) Reset profiles…',
+  confirmReset: (name: string, email: string) =>
+    `Reset Git Profile Switcher? All saved profiles (in every project) will be deleted and replaced by one profile 'init' from the git identity active in the terminal: ${name} <${email}>.`,
+  confirmResetNoIdentity: () =>
+    'Reset Git Profile Switcher? All saved profiles (in every project) will be deleted. This project has no git identity yet, so no \'init\' profile can be created.',
+  resetDone: (alias: string, name: string, email: string) => `Profiles reset. Active profile: '${alias}' (${name} <${email}>).`,
+  resetDoneEmpty: () => 'Profiles reset. No profiles saved.',
   noProfiles: () => 'No profiles saved yet.',
   pickEditPlaceholder: () => 'Choose a profile to edit',
   pickDeletePlaceholder: () => 'Choose a profile to delete',
@@ -65,6 +75,8 @@ const en = {
 
 const id: typeof en = {
   current: () => 'saat ini',
+  enable: () => '$(check) Aktifkan',
+  disable: () => '$(circle-slash) Nonaktifkan',
   activationPlaceholder: () => 'Aktifkan Git Profile Switcher di semua project?',
   enabled: () => 'Git Profile Switcher diaktifkan untuk semua project.',
   disabled: () => 'Git Profile Switcher dinonaktifkan untuk semua project.',
@@ -76,6 +88,14 @@ const id: typeof en = {
   initSaved: (alias, name, email) => `Identity git saat ini disimpan sebagai profile '${alias}' (${name} <${email}>).`,
   switchPlaceholder: () => 'Pilih profile git untuk project ini',
   addNew: () => '$(add) Tambah profile baru…',
+  openSettings: () => '$(json) Buka settings JSON',
+  reset: () => '$(discard) Reset profile…',
+  confirmReset: (name, email) =>
+    `Reset Git Profile Switcher? Semua profile tersimpan (di semua project) akan dihapus dan diganti satu profile 'init' dari identity git yang aktif di terminal: ${name} <${email}>.`,
+  confirmResetNoIdentity: () =>
+    'Reset Git Profile Switcher? Semua profile tersimpan (di semua project) akan dihapus. Project ini belum punya identity git, jadi profile \'init\' tidak bisa dibuat.',
+  resetDone: (alias, name, email) => `Profile di-reset. Profile aktif: '${alias}' (${name} <${email}>).`,
+  resetDoneEmpty: () => 'Profile di-reset. Tidak ada profile tersimpan.',
   noProfiles: () => 'Belum ada profile tersimpan.',
   pickEditPlaceholder: () => 'Pilih profile yang akan diedit',
   pickDeletePlaceholder: () => 'Pilih profile yang akan dihapus',

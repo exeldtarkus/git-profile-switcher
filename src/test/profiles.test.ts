@@ -8,6 +8,7 @@ import {
   registerInitProfile,
   removeProfile,
   replaceProfile,
+  resetProfiles,
   uniqueAlias,
   validateProfile,
 } from '../profiles';
@@ -95,4 +96,10 @@ test('normalize: icon "$(x)" disimpan sebagai "x", icon default tidak ditulis', 
   assert.deepStrictEqual(normalize({ ...work, icon: ' $(Rocket) ' }), { ...work, icon: 'rocket' });
   assert.ok(!('icon' in normalize({ ...work, icon: 'account' })));
   assert.ok(!('icon' in normalize({ ...work, icon: '' })));
+});
+
+test('resetProfiles: hanya tersisa profile init dari identity saat ini', () => {
+  const result = resetProfiles({ name: 'Exel', email: 'exel@gmail.com' }, 'proj');
+  assert.deepStrictEqual(result, { profiles: [init], active: init });
+  assert.deepStrictEqual(resetProfiles({ name: undefined, email: undefined }, 'proj'), { profiles: [], active: undefined });
 });
