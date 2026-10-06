@@ -2,7 +2,7 @@
   "name": "git-profile-switcher",
   "displayName": "%displayName%",
   "description": "%description%",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "publisher": "exeltarkus",
   "license": "MIT",
   "repository": {
