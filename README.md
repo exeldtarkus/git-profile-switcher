@@ -12,7 +12,8 @@ A VS Code extension for switching the git profile (`user.name` + `user.email`) p
 - **Edit profile**: change the alias, username, email or color. If the profile is in use in this project, the project's git config is updated too.
 - **Delete profile**: asks for confirmation. Your projects' git config is not changed.
 - **Profile color**: each profile can have its own status bar text/icon color (a preset or a custom hex such as `#ff8800`). Set it while adding/editing a profile, or with `Git Profile Switcher: Set profile color`.
-- **Switch profile**: click the status bar item (👤 `<alias>`) or run `Git Profile Switcher: Switch profile`. The identity is written with `git config --local`, so it only applies to this project.
+- **Profile icon**: each profile can have its own status bar icon, picked from presets (briefcase, home, rocket, …) or any [codicon](https://code.visualstudio.com/api/references/icons-in-labels#icon-listing) name such as `coffee` or `sync~spin`. Set it while adding/editing a profile, or with `Git Profile Switcher: Set profile icon`.
+- **Switch profile**: click the status bar item (e.g. 💼 `work - Git Profile`) or run `Git Profile Switcher: Switch profile`. The identity is written with `git config --local`, so it only applies to this project.
 - **Status bar**: shows the alias of the active profile. It turns yellow when the project's identity is not a saved profile or is not set. It also updates when you change `git config` from the terminal.
 - **Notification language**: English or Bahasa Indonesia (`Git Profile Switcher: Language`).
 
@@ -25,6 +26,7 @@ A VS Code extension for switching the git profile (`user.name` + `user.email`) p
 | `Git Profile Switcher: Add profile` | Add a new profile |
 | `Git Profile Switcher: Edit profile` | Edit an existing profile |
 | `Git Profile Switcher: Set profile color` | Change only a profile's color |
+| `Git Profile Switcher: Set profile icon` | Change only a profile's icon |
 | `Git Profile Switcher: Delete profile` | Delete a profile |
 | `Git Profile Switcher: Language` | Change the notification language |
 
@@ -45,7 +47,7 @@ Example profile list:
 ```json
 "gitProfileSwitcher.profiles": [
   { "alias": "init", "name": "Exel", "email": "exel@personal.com" },
-  { "alias": "work", "name": "Exel", "email": "exel@company.com", "color": "#3b8eea" }
+  { "alias": "work", "name": "Exel", "email": "exel@company.com", "color": "#3b8eea", "icon": "briefcase" }
 ]
 ```
 

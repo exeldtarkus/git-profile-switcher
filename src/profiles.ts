@@ -6,6 +6,8 @@ export interface Profile {
   email: string;
   /** Warna teks item status bar saat profile ini aktif, format hex (#rgb / #rrggbb). Opsional. */
   color?: string;
+  /** Nama codicon untuk status bar (mis. "briefcase"). Opsional, default DEFAULT_ICON. */
+  icon?: string;
 }
 
 export interface Identity {
@@ -27,6 +29,37 @@ export const PRESET_COLORS = [
   { key: 'purple', hex: '#c678dd' },
   { key: 'pink', hex: '#ff79c6' },
 ] as const;
+
+export const DEFAULT_ICON = 'account';
+
+/** Codicon siap pakai. Daftar lengkap: https://code.visualstudio.com/api/references/icons-in-labels */
+export const PRESET_ICONS = [
+  'account',
+  'person',
+  'briefcase',
+  'home',
+  'organization',
+  'rocket',
+  'heart',
+  'star-full',
+  'flame',
+  'zap',
+  'shield',
+  'key',
+  'code',
+  'terminal',
+  'github',
+  'globe',
+  'beaker',
+  'bug',
+] as const;
+
+const ICON_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*(?:~spin)?$/;
+
+/** Nama codicon tanpa "$()": huruf kecil, angka, tanda '-', opsional akhiran "~spin". */
+export function isValidIcon(icon: string): boolean {
+  return ICON_RE.test(icon.trim());
+}
 
 export function isValidColor(color: string): boolean {
   return COLOR_RE.test(color.trim());
@@ -87,7 +120,7 @@ export function validateProfile(
   profiles: Profile[],
   profile: Profile,
   originalAlias?: string,
-): 'aliasRequired' | 'aliasTaken' | 'nameRequired' | 'emailInvalid' | 'colorInvalid' | undefined {
+): 'aliasRequired' | 'aliasTaken' | 'nameRequired' | 'emailInvalid' | 'colorInvalid' | 'iconInvalid' | undefined {
   if (!profile.alias.trim()) {
     return 'aliasRequired';
   }
@@ -103,6 +136,9 @@ export function validateProfile(
   }
   if (profile.color && !isValidColor(profile.color)) {
     return 'colorInvalid';
+  }
+  if (profile.icon && !isValidIcon(profile.icon)) {
+    return 'iconInvalid';
   }
   return undefined;
 }
@@ -123,6 +159,11 @@ export function normalize(profile: Profile): Profile {
   const color = profile.color?.trim().toLowerCase();
   if (color) {
     result.color = color; // tanpa warna: key tidak ditulis ke settings.json
+  }
+  // Terima juga input "$(rocket)" dan simpan sebagai "rocket"; icon default tidak perlu ditulis.
+  const icon = profile.icon?.trim().replace(/^\$\((.*)\)$/, '$1').toLowerCase();
+  if (icon && icon !== DEFAULT_ICON) {
+    result.icon = icon;
   }
   return result;
 }

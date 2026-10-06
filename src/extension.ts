@@ -3,10 +3,13 @@ import * as path from 'path';
 import { getIdentity, repoRoot, setIdentity } from './git';
 import { Lang, messages, resolveLang } from './messages';
 import {
+  DEFAULT_ICON,
   PRESET_COLORS,
+  PRESET_ICONS,
   Profile,
   findByIdentity,
   isValidColor,
+  isValidIcon,
   normalize,
   registerInitProfile,
   removeProfile,
@@ -87,6 +90,7 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('gitProfileSwitcher.editProfile', () => guard(editProfile)),
     vscode.commands.registerCommand('gitProfileSwitcher.deleteProfile', () => guard(deleteProfile)),
     vscode.commands.registerCommand('gitProfileSwitcher.setColor', () => guard(setColor)),
+    vscode.commands.registerCommand('gitProfileSwitcher.setIcon', () => guard(setIcon)),
   );
 
   if (enabled()) {
@@ -132,7 +136,7 @@ async function switchProfile(root: string): Promise<void> {
   const active = findByIdentity(list, await getIdentity(root));
   type Item = vscode.QuickPickItem & { profile?: Profile };
   const items: Item[] = list.map((p) => ({
-    label: `$(account) ${p.alias}`,
+    label: `$(${p.icon ?? DEFAULT_ICON}) ${p.alias}`,
     description: [p.name, p.color, p === active ? t().current() : undefined].filter(Boolean).join(' · '),
     detail: p.email,
     profile: p,
@@ -211,6 +215,53 @@ async function setColor(): Promise<void> {
   vscode.window.showInformationMessage(t().updated(updated.alias));
 }
 
+/** Ganti icon saja, tanpa melewati input alias/name/email. */
+async function setIcon(): Promise<void> {
+  const target = await pickProfile(t().pickIconPlaceholder());
+  if (!target) {
+    return;
+  }
+  const icon = await pickIcon(target.icon);
+  if (icon === undefined) {
+    return;
+  }
+  const updated = normalize({ ...target, icon });
+  await saveProfiles(replaceProfile(profiles(), target.alias, updated));
+  vscode.window.showInformationMessage(t().updated(updated.alias));
+}
+
+/** Pilih codicon dari preset atau ketik nama custom. Return undefined = batal. */
+async function pickIcon(current?: string): Promise<string | undefined> {
+  type Item = vscode.QuickPickItem & { icon?: string };
+  const selected = current ?? DEFAULT_ICON;
+  const presets: string[] = [...PRESET_ICONS];
+  const items: Item[] = [
+    ...presets.map((icon) => ({
+      label: `$(${icon}) ${icon}`,
+      description: [icon === DEFAULT_ICON ? t().iconDefault() : undefined, icon === selected ? t().current() : undefined]
+        .filter(Boolean)
+        .join(' · '),
+      icon,
+    })),
+    {
+      label: t().iconCustom(),
+      description: presets.includes(selected) ? undefined : `$(${selected}) ${selected} · ${t().current()}`,
+    },
+  ];
+  const picked = await vscode.window.showQuickPick(items, { placeHolder: t().iconPlaceholder(), matchOnDescription: true });
+  if (!picked) {
+    return undefined;
+  }
+  if (picked.icon !== undefined) {
+    return picked.icon;
+  }
+  return vscode.window.showInputBox({
+    prompt: t().iconPrompt(),
+    value: presets.includes(selected) ? '' : selected,
+    validateInput: (v) => (isValidIcon(v.trim().replace(/^\$\((.*)\)$/, '$1')) ? undefined : t().iconInvalid()),
+  });
+}
+
 /** Pilih warna dari preset, tanpa warna, atau hex custom. Return '' = tanpa warna, undefined = batal. */
 async function pickColor(current?: string): Promise<string | undefined> {
   type Item = vscode.QuickPickItem & { hex?: string };
@@ -264,9 +315,9 @@ async function pickProfile(placeHolder: string): Promise<Profile | undefined> {
 /** Minta alias, name, email lewat input box. `initial` diisi saat edit. */
 async function promptProfile(initial?: Profile): Promise<Profile | undefined> {
   const list = profiles();
-  const check = (draft: Profile, field: 'alias' | 'name' | 'email' | 'color') => {
+  const check = (draft: Profile, field: 'alias' | 'name' | 'email' | 'color' | 'icon') => {
     const error = validateProfile(list, normalize(draft), initial?.alias);
-    const fieldOf = { aliasRequired: 'alias', aliasTaken: 'alias', nameRequired: 'name', emailInvalid: 'email', colorInvalid: 'color' } as const;
+    const fieldOf = { aliasRequired: 'alias', aliasTaken: 'alias', nameRequired: 'name', emailInvalid: 'email', colorInvalid: 'color', iconInvalid: 'icon' } as const;
     return error && fieldOf[error] === field ? t()[error]() : undefined;
   };
   const draft: Profile = { alias: '', name: '', email: '', ...initial };
@@ -303,6 +354,11 @@ async function promptProfile(initial?: Profile): Promise<Profile | undefined> {
     return undefined;
   }
   draft.color = color;
+  const icon = await pickIcon(initial?.icon);
+  if (icon === undefined) {
+    return undefined;
+  }
+  draft.icon = icon;
   return normalize(draft);
 }
 
@@ -346,22 +402,27 @@ async function refresh(): Promise<void> {
   const identity = await getIdentity(root).catch(() => ({ name: undefined, email: undefined }));
   const active = findByIdentity(profiles(), identity);
   if (active) {
-    statusBar.text = `$(account) ${active.alias}`;
+    statusBar.text = statusText(active.alias, active.icon);
     statusBar.tooltip = t().tooltipActive(active.alias, active.name, active.email, project);
     statusBar.backgroundColor = undefined;
     statusBar.color = active.color;
   } else if (identity.name && identity.email) {
-    statusBar.text = `$(account) ${t().statusUnknown()}`;
+    statusBar.text = statusText(t().statusUnknown());
     statusBar.tooltip = t().tooltipUnknown(identity.name, identity.email, project);
     statusBar.color = undefined;
     statusBar.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
   } else {
-    statusBar.text = `$(account) ${t().statusNone()}`;
+    statusBar.text = statusText(t().statusNone());
     statusBar.tooltip = t().tooltipNone(project);
     statusBar.color = undefined;
     statusBar.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
   }
   statusBar.show();
+}
+
+/** Teks status bar: "<icon> <profile> - Git Profile". */
+function statusText(label: string, icon = DEFAULT_ICON): string {
+  return `$(${icon}) ${label} - Git Profile`;
 }
 
 /** Pantau .git/config repo aktif supaya `git config user.*` dari terminal langsung tampil di status bar. */

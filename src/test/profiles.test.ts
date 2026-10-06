@@ -3,6 +3,7 @@ import * as assert from 'node:assert';
 import {
   Profile,
   findByIdentity,
+  isValidIcon,
   normalize,
   registerInitProfile,
   removeProfile,
@@ -77,4 +78,21 @@ test('normalize: warna di-lowercase, warna kosong dihapus dari object', () => {
   assert.deepStrictEqual(normalize({ ...work, color: ' #FF8800 ' }), { ...work, color: '#ff8800' });
   assert.deepStrictEqual(normalize({ ...work, color: '' }), work);
   assert.ok(!('color' in normalize({ ...work, color: '' })));
+});
+
+test('icon: validasi nama codicon', () => {
+  assert.ok(isValidIcon('rocket'));
+  assert.ok(isValidIcon('star-full'));
+  assert.ok(isValidIcon('sync~spin'));
+  assert.ok(!isValidIcon('Rocket Ship'));
+  assert.ok(!isValidIcon('$(rocket'));
+  const base = { alias: 'x', name: 'a', email: 'a@b.c' };
+  assert.strictEqual(validateProfile([], { ...base, icon: 'bad icon' }), 'iconInvalid');
+  assert.strictEqual(validateProfile([], { ...base, icon: 'briefcase' }), undefined);
+});
+
+test('normalize: icon "$(x)" disimpan sebagai "x", icon default tidak ditulis', () => {
+  assert.deepStrictEqual(normalize({ ...work, icon: ' $(Rocket) ' }), { ...work, icon: 'rocket' });
+  assert.ok(!('icon' in normalize({ ...work, icon: 'account' })));
+  assert.ok(!('icon' in normalize({ ...work, icon: '' })));
 });

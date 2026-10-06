@@ -2,7 +2,7 @@
   "name": "git-profile-switcher",
   "displayName": "%displayName%",
   "description": "%description%",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "publisher": "exeltarkus",
   "license": "MIT",
   "repository": {
@@ -47,6 +47,11 @@
         "category": "Git Profile Switcher"
       },
       {
+        "command": "gitProfileSwitcher.setIcon",
+        "title": "%command.setIcon%",
+        "category": "Git Profile Switcher"
+      },
+      {
         "command": "gitProfileSwitcher.deleteProfile",
         "title": "%command.deleteProfile%",
         "category": "Git Profile Switcher"
@@ -77,6 +82,10 @@
         },
         {
           "command": "gitProfileSwitcher.setColor",
+          "when": "config.gitProfileSwitcher.enabled"
+        },
+        {
+          "command": "gitProfileSwitcher.setIcon",
           "when": "config.gitProfileSwitcher.enabled"
         }
       ]
@@ -115,6 +124,11 @@
                 "type": "string",
                 "pattern": "^(#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}))?$",
                 "description": "%config.profiles.color%"
+              },
+              "icon": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(~spin)?$",
+                "description": "%config.profiles.icon%"
               }
             }
           }

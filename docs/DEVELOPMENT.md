@@ -57,9 +57,9 @@ mkdir -p .vscode && echo '{ "gitProfileSwitcher.enabled": true }' > .vscode/sett
 
 Test scenario in the Extension Development Host:
 
-1. Open `~/git-profile-test`: a popup says the current identity was saved as profile `init`, and the status bar shows 👤 `init`.
+1. Open `~/git-profile-test`: a popup says the current identity was saved as profile `init`, and the status bar shows 👤 `init - Git Profile`.
 2. Run `Git Profile Switcher: Add profile` (e.g. alias `work`, pick a color) → choose *Use in this project*.
-   The status bar shows 👤 `work` in that color.
+   The status bar shows 👤 `work - Git Profile` in that color.
 3. In the terminal:
    ```bash
    git config --local user.email   # the email of profile 'work'

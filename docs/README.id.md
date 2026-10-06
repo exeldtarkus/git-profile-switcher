@@ -12,7 +12,8 @@ Extension VS Code untuk mengganti git profile (`user.name` + `user.email`) per p
 - **Edit profile**: ubah alias, username, email, atau warna. Jika profile itu sedang dipakai di project ini, git config project ikut diperbarui.
 - **Hapus profile**: minta konfirmasi dulu. Git config project Anda tidak diubah.
 - **Warna profile**: setiap profile bisa punya warna teks/ikon status bar sendiri (preset atau hex custom seperti `#ff8800`). Diatur saat tambah/edit profile, atau lewat `Git Profile Switcher: Atur warna profile`.
-- **Ganti profile**: klik item status bar (👤 `<alias>`) atau jalankan `Git Profile Switcher: Ganti profile`. Identity ditulis dengan `git config --local`, jadi hanya berlaku untuk project ini.
+- **Icon profile**: setiap profile bisa punya icon status bar sendiri, dipilih dari preset (briefcase, home, rocket, …) atau nama [codicon](https://code.visualstudio.com/api/references/icons-in-labels#icon-listing) apa pun seperti `coffee` atau `sync~spin`. Diatur saat tambah/edit profile, atau lewat `Git Profile Switcher: Atur icon profile`.
+- **Ganti profile**: klik item status bar (mis. 💼 `kantor - Git Profile`) atau jalankan `Git Profile Switcher: Ganti profile`. Identity ditulis dengan `git config --local`, jadi hanya berlaku untuk project ini.
 - **Status bar**: menampilkan alias profile aktif. Berwarna kuning jika identity project bukan profile tersimpan atau belum di-set. Ikut berubah saat `git config` diubah dari terminal.
 - **Bahasa notifikasi**: English atau Bahasa Indonesia (`Git Profile Switcher: Bahasa`).
 
@@ -25,6 +26,7 @@ Extension VS Code untuk mengganti git profile (`user.name` + `user.email`) per p
 | `Git Profile Switcher: Tambah profile` | Tambah profile baru |
 | `Git Profile Switcher: Edit profile` | Edit profile yang sudah ada |
 | `Git Profile Switcher: Atur warna profile` | Ubah warna profile saja |
+| `Git Profile Switcher: Atur icon profile` | Ubah icon profile saja |
 | `Git Profile Switcher: Hapus profile` | Hapus profile |
 | `Git Profile Switcher: Bahasa` | Ganti bahasa notifikasi |
 
@@ -47,7 +49,7 @@ Contoh daftar profile:
 ```json
 "gitProfileSwitcher.profiles": [
   { "alias": "init", "name": "Exel", "email": "exel@personal.com" },
-  { "alias": "kantor", "name": "Exel", "email": "exel@company.com", "color": "#3b8eea" }
+  { "alias": "kantor", "name": "Exel", "email": "exel@company.com", "color": "#3b8eea", "icon": "briefcase" }
 ]
 ```
 

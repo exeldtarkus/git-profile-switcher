@@ -57,9 +57,9 @@ mkdir -p .vscode && echo '{ "gitProfileSwitcher.enabled": true }' > .vscode/sett
 
 Skenario uji di jendela Extension Development Host:
 
-1. Buka `~/git-profile-test`: muncul popup bahwa identity saat ini disimpan sebagai profile `init`, dan status bar menampilkan 👤 `init`.
+1. Buka `~/git-profile-test`: muncul popup bahwa identity saat ini disimpan sebagai profile `init`, dan status bar menampilkan 👤 `init - Git Profile`.
 2. Jalankan `Git Profile Switcher: Tambah profile` (mis. alias `kantor`, pilih warna) → pilih *Pakai di project ini*.
-   Status bar menampilkan 👤 `kantor` dengan warna tersebut.
+   Status bar menampilkan 👤 `kantor - Git Profile` dengan warna tersebut.
 3. Di terminal:
    ```bash
    git config --local user.email   # email profile 'kantor'
