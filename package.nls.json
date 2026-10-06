@@ -1,0 +1,18 @@
+{
+  "displayName": "Git Profile Switcher",
+  "description": "Switch the git user.name / user.email per project from saved profiles, with the active profile shown in the status bar.",
+  "command.activation": "Activation",
+  "command.switchProfile": "Switch profile",
+  "command.addProfile": "Add profile",
+  "command.editProfile": "Edit profile",
+  "command.deleteProfile": "Delete profile",
+  "command.setColor": "Set profile color",
+  "command.language": "Language",
+  "config.enabled": "Enable Git Profile Switcher for this workspace.",
+  "config.profiles": "Saved git profiles (alias, name, email). Shared across all projects.",
+  "config.profiles.color": "Status bar text color when this profile is active, hex like #ff8800. Optional.",
+  "config.language": "Language for notifications.",
+  "config.language.auto": "Follow the VS Code display language.",
+  "config.language.en": "English",
+  "config.language.id": "Bahasa Indonesia"
+}

@@ -1,0 +1,18 @@
+{
+  "displayName": "Git Profile Switcher",
+  "description": "Ganti git user.name / user.email per project dari profile tersimpan, dengan profile aktif tampil di status bar.",
+  "command.activation": "Aktivasi",
+  "command.switchProfile": "Ganti profile",
+  "command.addProfile": "Tambah profile",
+  "command.editProfile": "Edit profile",
+  "command.deleteProfile": "Hapus profile",
+  "command.setColor": "Atur warna profile",
+  "command.language": "Bahasa",
+  "config.enabled": "Aktifkan Git Profile Switcher untuk workspace ini.",
+  "config.profiles": "Daftar profile git tersimpan (alias, name, email). Dipakai di semua project.",
+  "config.profiles.color": "Warna teks status bar saat profile ini aktif, hex seperti #ff8800. Opsional.",
+  "config.language": "Bahasa untuk notifikasi.",
+  "config.language.auto": "Ikuti bahasa tampilan VS Code.",
+  "config.language.en": "English",
+  "config.language.id": "Bahasa Indonesia"
+}
