@@ -1,5 +1,5 @@
 {
-  "displayName": "Git Profile Switcher",
+  "displayName": "Git Identity Switcher",
   "description": "Switch the git user.name / user.email per project from saved profiles, with the active profile shown in the status bar.",
   "command.activation": "Activation",
   "command.switchProfile": "Switch profile",
@@ -21,7 +21,7 @@
   "command.id.openSettings": "Buka settings JSON",
   "command.id.reset": "Reset (hapus semua profile, buat ulang 'init' dari identity git saat ini)",
   "command.id.language": "Bahasa",
-  "config.enabled": "Enable Git Profile Switcher in all projects (user setting). A project can still override it in its workspace settings.",
+  "config.enabled": "Enable Git Identity Switcher in all projects (user setting). A project can still override it in its workspace settings.",
   "config.profiles": "Saved git profiles (alias, name, email). Shared across all projects.",
   "config.profiles.color": "Status bar text color when this profile is active, hex like #ff8800. Optional.",
   "config.profiles.icon": "Codicon name shown in the status bar when this profile is active (e.g. \"briefcase\", \"rocket\"). Optional, default \"account\".",

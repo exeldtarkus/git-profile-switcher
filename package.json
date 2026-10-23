@@ -2,7 +2,7 @@
   "name": "git-profile-switcher",
   "displayName": "%displayName%",
   "description": "%description%",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "publisher": "exeltarkus",
   "license": "MIT",
   "repository": {
@@ -24,102 +24,102 @@
       {
         "command": "gitProfileSwitcher.activation",
         "title": "%command.activation%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.switchProfile",
         "title": "%command.switchProfile%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.addProfile",
         "title": "%command.addProfile%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.editProfile",
         "title": "%command.editProfile%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.setColor",
         "title": "%command.setColor%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.setIcon",
         "title": "%command.setIcon%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.deleteProfile",
         "title": "%command.deleteProfile%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.openSettings",
         "title": "%command.openSettings%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.reset",
         "title": "%command.reset%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.language",
         "title": "%command.language%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.id.activation",
         "title": "%command.id.activation%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.id.switchProfile",
         "title": "%command.id.switchProfile%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.id.addProfile",
         "title": "%command.id.addProfile%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.id.editProfile",
         "title": "%command.id.editProfile%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.id.setColor",
         "title": "%command.id.setColor%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.id.setIcon",
         "title": "%command.id.setIcon%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.id.deleteProfile",
         "title": "%command.id.deleteProfile%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.id.openSettings",
         "title": "%command.id.openSettings%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.id.reset",
         "title": "%command.id.reset%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       },
       {
         "command": "gitProfileSwitcher.id.language",
         "title": "%command.id.language%",
-        "category": "Git Profile Switcher"
+        "category": "Git Identity Switcher"
       }
     ],
     "menus": {
@@ -207,7 +207,7 @@
       ]
     },
     "configuration": {
-      "title": "Git Profile Switcher",
+      "title": "Git Identity Switcher",
       "properties": {
         "gitProfileSwitcher.enabled": {
           "type": "boolean",
