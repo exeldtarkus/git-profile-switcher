@@ -72,13 +72,13 @@ Test scenario in the Extension Development Host:
 
 ```bash
 npm run package
-code --install-extension git-profile-switcher-0.2.1.vsix
+code --install-extension git-identity-switch-0.7.0.vsix
 ```
 
 Uninstall:
 
 ```bash
-code --uninstall-extension exeltarkus.git-profile-switcher
+code --uninstall-extension exeltarkus.git-identity-switch
 ```
 
 ---
@@ -142,10 +142,10 @@ Or publish a prebuilt `.vsix`:
 
 ```bash
 npm run package
-npx ovsx publish git-profile-switcher-0.2.1.vsix -p $OVSX_PAT
+npx ovsx publish git-identity-switch-0.7.0.vsix -p $OVSX_PAT
 ```
 
 Once published, the extension is available at:
-<https://open-vsx.org/extension/exeltarkus/git-profile-switcher>
+<https://open-vsx.org/extension/exeltarkus/git-identity-switch>
 
 It usually takes a few minutes before it can be searched and installed from VSCodium / other editors that use Open VSX.

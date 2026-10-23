@@ -1,6 +1,8 @@
 # Git Identity Switcher
 
-> Formerly named **Git Profile Switcher**. The extension ID is still `exeltarkus.git-profile-switcher`.
+> Formerly named **Git Profile Switcher** (ID `exeltarkus.git-profile-switcher`). The new extension ID is `exeltarkus.git-identity-switch`.
+> Existing users: uninstall the old extension, then install the new one — both register the same command IDs, so keeping both installed causes conflicts.
+> Your saved profiles are kept, since they live in `settings.json` (`gitProfileSwitcher.profiles`).
 
 🇬🇧 English | 🇮🇩 [Bahasa Indonesia](docs/README.id.md)
 

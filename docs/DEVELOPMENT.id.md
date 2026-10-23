@@ -72,13 +72,13 @@ Skenario uji di jendela Extension Development Host:
 
 ```bash
 npm run package
-code --install-extension git-profile-switcher-0.2.1.vsix
+code --install-extension git-identity-switch-0.7.0.vsix
 ```
 
 Uninstall:
 
 ```bash
-code --uninstall-extension exeltarkus.git-profile-switcher
+code --uninstall-extension exeltarkus.git-identity-switch
 ```
 
 ---
@@ -142,11 +142,11 @@ Atau publish file `.vsix` yang sudah dibuild:
 
 ```bash
 npm run package
-npx ovsx publish git-profile-switcher-0.2.1.vsix -p $OVSX_PAT
+npx ovsx publish git-identity-switch-0.7.0.vsix -p $OVSX_PAT
 ```
 
 Setelah berhasil, extension muncul di:
-<https://open-vsx.org/extension/exeltarkus/git-profile-switcher>
+<https://open-vsx.org/extension/exeltarkus/git-identity-switch>
 
 Biasanya butuh beberapa menit sampai bisa dicari dan diinstall dari VSCodium / editor lain yang memakai Open VSX.
 
